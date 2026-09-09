@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Approved layout A reference</title><style>*{box-sizing:border-box;margin:0;padding:0}html,body{height:auto;overflow:visible}body{font-family:system-ui,sans-serif;line-height:1.5;background:#f5f5f5}body .trial-canvas{margin:0 auto}body .controls,body .vote,body .design-notes,body .trial-canvas>h4,body .trial-canvas>p.small{display:none!important}</style></head><body>
+<style>
+  .trial-canvas { max-width: 1448px; margin: 0 auto; padding: 24px; background: #f5f5f5; color-scheme: light; color: #202020; font: 14px/1.5 system-ui, sans-serif; }
+  .trial-canvas * { box-sizing: border-box; }
+  .trial-canvas h2 { font-size: 25px; letter-spacing: -.02em; margin: 0 0 6px; }
+  .trial-canvas h3 { font-size: 21px; line-height: 1.3; margin: 0 0 8px; }
+  .trial-canvas h4 { font-size: 15px; margin: 0 0 5px; }
+  .trial-canvas p { margin: 0 0 12px; }
+  .trial-canvas .muted { color: #606060; }
+  .trial-canvas .small { font-size: 12px; }
+  .trial-canvas [hidden] { display: none !important; }
+  .trial-canvas button, .trial-canvas select { font: inherit; color: #202020; border: 1px solid #8c8c8c; border-radius: 3px; background: #fff; min-height: 40px; padding: 8px 10px; }
+  .trial-canvas button { cursor: pointer; }
+  .trial-canvas button:disabled { cursor: default; color: #777; background: #ededed; }
+  .trial-canvas button:focus-visible, .trial-canvas select:focus-visible, .trial-canvas input:focus-visible { outline: 2px solid #202020; outline-offset: 3px; }
+  .trial-canvas button.primary { background: #232323; color: #fff; border-color: #232323; }
+  .trial-canvas .link { border: 0; padding: 0; min-height: 32px; background: transparent; text-decoration: underline; text-underline-offset: 3px; }
+  .trial-canvas .controls { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; margin: 18px 0 24px; border: 1px dashed #aaa; background: #f4f4f4; }
+  .trial-canvas .controls label { display: grid; gap: 4px; flex: 1; min-width: 240px; }
+  .trial-canvas .controls span { font-size: 12px; font-weight: 600; }
+  .trial-canvas .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: start; }
+  .trial-canvas .caption { font-size: 12px; color: #606060; margin: 0 0 8px; }
+  .trial-canvas .sheet { border: 1px solid #a0a0a0; background: #fff; min-height: 665px; }
+  .trial-canvas .appbar { border-bottom: 1px solid #ddd; padding: 12px 18px; display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
+  .trial-canvas .body { padding: 22px 18px; }
+  .trial-canvas .field { display: block; margin: 18px 0; }
+  .trial-canvas .field > span { display: block; margin-bottom: 5px; font-weight: 600; }
+  .trial-canvas .field select { width: 100%; }
+  .trial-canvas fieldset { border: 0; margin: 20px 0 12px; padding: 0; min-width: 0; }
+  .trial-canvas legend { font-weight: 600; margin-bottom: 8px; }
+  .trial-canvas .class-choice { display: flex; gap: 10px; border: 1px solid #c6c6c6; padding: 11px; margin-bottom: 8px; align-items: start; }
+  .trial-canvas .class-choice:has(input:checked) { outline: 1px solid #333; border-color: #333; background: #fafafa; }
+  .trial-canvas input[type=radio] { margin-top: 5px; accent-color: #252525; flex-shrink: 0; }
+  .trial-canvas .class-choice strong { display: block; font-size: 13px; }
+  .trial-canvas .class-choice small { display: block; color: #555; line-height: 1.5; }
+  .trial-canvas .class-choice.unavailable { color: #777; background: #f5f5f5; }
+  .trial-canvas .notice { border: 1px solid #b8b8b8; border-left: 3px solid #333; padding: 13px; margin: 18px 0; background: #fafafa; }
+  .trial-canvas .notice p { margin: 4px 0 0; }
+  .trial-canvas .badge { display: inline-block; font-size: 12px; border: 1px solid #777; padding: 3px 7px; margin: 4px 0 12px; }
+  .trial-canvas .details { margin: 15px 0; }
+  .trial-canvas .details div { padding: 8px 0; border-bottom: 1px solid #ececec; }
+  .trial-canvas dt { font-size: 12px; color: #626262; }
+  .trial-canvas dd { margin: 2px 0 0; }
+  .trial-canvas .buttons { display: grid; gap: 8px; margin: 16px 0; }
+  .trial-canvas .wide { width: 100%; }
+  .trial-canvas table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 13px; }
+  .trial-canvas th, .trial-canvas td { border-bottom: 1px solid #ccc; text-align: left; padding: 10px 6px; vertical-align: top; }
+  .trial-canvas th { background: #f2f2f2; font-size: 12px; font-weight: 600; }
+  .trial-canvas .compact td { font-size: 12px; }
+  .trial-canvas .count { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 12px; }
+  .trial-canvas .count strong { font-size: 22px; }
+  .trial-canvas .design-notes { display: flex; flex-wrap: wrap; gap: 9px; margin: 20px 0; }
+  .trial-canvas .design-notes span { border: 1px solid #bbb; padding: 5px 9px; font-size: 12px; background: #fff; }
+  .trial-canvas .vote { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .trial-canvas .vote .option { transition: none; border-radius: 3px; font-size: 13px; padding: 10px 14px; margin: 0; }
+  .trial-canvas .vote .option.selected { border: 2px solid #222; background: #e8e8e8; }
+  @media (max-width: 980px) { .trial-canvas .board { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; } .trial-canvas .sheet { min-height: auto; } }
+</style>
+
+<div class="trial-canvas" id="trial-canvas">
+  <h2>Trial booking: three simple views</h2>
+  <p class="muted">Review the layout and preview the required outcomes. This uses sample data in your browser; it has no booking backend.</p>
+
+  <div class="controls" aria-label="Mockup controls">
+    <label><span>Layout preview</span>
+      <select id="layout-preview">
+        <option value="stacked">A · Stacked class choices (recommended)</option>
+        <option value="table">B · Compact class table</option>
+      </select>
+    </label>
+    <label><span>Booking-status preview</span>
+      <select id="state-preview">
+        <option value="pending">Pending payment</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="failed">Payment failed</option>
+        <option value="lost">Last seat lost</option>
+        <option value="duplicate">Duplicate booking</option>
+        <option value="empty">Empty roster</option>
+      </select>
+    </label>
+    <button type="button" id="reset-preview">Reset preview</button>
+  </div>
+
+  <div class="board">
+    <section aria-labelledby="book-title">
+      <p class="caption">01 / Parent selects and submits</p>
+      <div class="sheet">
+        <div class="appbar"><strong>Trial booking</strong><span>Local demo</span></div>
+        <div class="body">
+          <h3 id="book-title">Book a trial class</h3>
+          <p class="muted">Choose a child and an available class.</p>
+          <form id="booking-preview-form">
+            <label class="field" for="parent-select"><span>Demo parent</span>
+              <select id="parent-select"><option value="anita">Anita Tan</option><option value="dimas">Dimas Lim</option></select>
+            </label>
+            <label class="field" for="child-select"><span>Child</span>
+              <select id="child-select" required></select>
+            </label>
+            <fieldset><legend>Trial class</legend>
+              <div id="stacked-classes">
+                <label class="class-choice"><input type="radio" name="classChoice" value="science" checked><span><strong>Science: light &amp; shadows</strong><small>Sat, 19 Sep · 10:00 UTC+7</small><small>1 seat left · 3 / 4 confirmed</small></span></label>
+                <label class="class-choice unavailable"><input type="radio" name="classChoice" value="math" disabled><span><strong>Math: number patterns</strong><small>Sat, 19 Sep · 13:00 UTC+7</small><small>Full · 4 / 4 confirmed</small></span></label>
+              </div>
+              <table id="table-classes" class="compact" hidden><thead><tr><th scope="col">Pick</th><th scope="col">Class / time</th><th scope="col">Seats left</th></tr></thead><tbody>
+                <tr><td><input type="radio" name="tableChoice" checked aria-label="Choose Science: light and shadows"></td><td>Science: light &amp; shadows<br><span class="small muted">19 Sep · 10:00 UTC+7</span></td><td>1 / 4</td></tr>
+                <tr><td><input type="radio" name="tableChoice" disabled aria-label="Math: number patterns is full"></td><td>Math: number patterns<br><span class="small muted">19 Sep · 13:00 UTC+7</span></td><td>Full</td></tr>
+              </tbody></table>
+            </fieldset>
+            <p class="small muted">A seat is confirmed only after a successful payment and availability check.</p>
+            <div class="notice" id="booking-error" role="alert" hidden><strong>Already booked</strong><p id="booking-error-text"></p></div>
+            <button type="submit" class="primary wide">Submit booking</button>
+            <p class="small muted" style="margin-top:10px">This demo uses simulated payments.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="status-title">
+      <p class="caption">02 / Parent sees the stored outcome</p>
+      <div class="sheet">
+        <div class="appbar"><strong>Trial booking</strong><span>Local demo</span></div>
+        <div class="body">
+          <p class="small muted" id="booking-ref">Booking #41</p>
+          <h3 id="status-title">Your trial booking</h3>
+          <span class="badge" id="booking-badge">Pending payment</span>
+          <dl class="details">
+            <div><dt>Child</dt><dd id="booked-child">Maya Tan</dd></div>
+            <div><dt>Class</dt><dd>Science: light &amp; shadows</dd></div>
+            <div><dt>When</dt><dd>Sat, 19 Sep · 10:00 UTC+7</dd></div>
+          </dl>
+          <div class="notice" aria-live="polite" aria-atomic="true"><strong id="status-heading">Payment is pending</strong><p id="status-message">Your booking is saved. Your child is not on the confirmed roster yet.</p></div>
+          <div id="payment-controls">
+            <h4>Mock payment</h4><p class="small muted">Choose an outcome. No real money is involved.</p>
+            <div class="buttons"><button type="button" class="primary" id="simulate-success">Simulate success</button><button type="button" id="simulate-failure">Simulate failure</button></div>
+          </div>
+          <div id="payment-result" hidden><dl class="details"><div><dt>Payment result</dt><dd id="payment-outcome"></dd></div></dl></div>
+          <button type="button" class="link" id="back-to-booking">Book another trial</button>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="roster-title">
+      <p class="caption">03 / Teacher sees confirmed students</p>
+      <div class="sheet">
+        <div class="appbar"><strong>Trial booking</strong><span>Teacher view</span></div>
+        <div class="body">
+          <h3 id="roster-title">Class roster</h3>
+          <p><strong>Science: light &amp; shadows</strong><br><span class="muted">Sat, 19 Sep · 10:00 UTC+7</span></p>
+          <div class="count"><span>Confirmed students</span><strong id="roster-count">3 / 4</strong></div>
+          <table aria-label="Confirmed students"><thead><tr><th scope="col">Student</th><th scope="col">Booking</th></tr></thead><tbody id="roster-rows"></tbody></table>
+          <p id="empty-roster" class="muted" hidden>No confirmed students yet.</p>
+          <p class="small muted">Only confirmed bookings appear here.</p>
+          <div class="notice" aria-live="polite"><p id="roster-message">Pending bookings do not hold a seat.</p></div>
+          <button type="button" class="link" id="refresh-roster">Refresh roster</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="design-notes" aria-label="Proposed styling">
+    <span>System font · 14-16px</span><span>White surface + gray borders</span><span>Native fields and buttons</span><span>Visible keyboard focus</span><span>Text explains every status</span><span>No animations</span>
+  </div>
+  <p class="muted small">Canvas controls and side-by-side views are for this review. The submitted app will use three separate pages. In the lost-seat preview, the selection can be stale; confirmation checks the database again.</p>
+  <h4>Which class picker should we keep?</h4>
+  <p class="small muted">A is easier to scan on a narrow screen. B is denser. Both use the same booking flow.</p>
+  <div class="vote options">
+    <button type="button" class="option" data-choice="stacked-class-picker" onclick="toggleSelect(this)">A · Stacked choices</button>
+    <button type="button" class="option" data-choice="compact-class-table" onclick="toggleSelect(this)">B · Compact table</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const children = {anita: ["Maya Tan", "Leo Tan"], dimas: ["Rafi Lim"]};
+  const baseRoster = [{name: "Ava Ng", id: 11}, {name: "Noah Lee", id: 12}, {name: "Jia Koh", id: 13}];
+  const states = {
+    pending: {badge:"Pending payment", title:"Payment is pending", message:"Your booking is saved. Your child is not on the confirmed roster yet.", payment:"", roster:"Pending bookings do not hold a seat."},
+    confirmed: {badge:"Confirmed", title:"Your child has a seat", message:"The simulated payment succeeded and your booking is confirmed.", payment:"Succeeded (simulated)", roster:"This booking is now included in the confirmed roster."},
+    failed: {badge:"Payment failed", title:"Payment did not go through", message:"The simulated payment failed. Your child has not been added to the roster.", payment:"Failed (simulated)", roster:"The failed payment did not add a student."},
+    lost: {badge:"Cancelled", title:"The last seat was taken", message:"Another booking confirmed first. Your booking is cancelled and no charge was made.", payment:"Blocked: class full", roster:"The other child took the fourth seat. This booking remains off the roster."},
+    duplicate: {badge:"Confirmed", title:"Existing booking", message:"This child already has a confirmed booking for this class. No second booking was added.", payment:"Succeeded on the existing booking", roster:"The duplicate submission did not add another roster entry."},
+    empty: {badge:"Pending payment", title:"Payment is pending", message:"This class has no confirmed students in this preview.", payment:"", roster:"An empty roster is a valid state."}
+  };
+  let bookedName = "Maya Tan";
+  const byId = function (id) { return document.getElementById(id); };
+  function loadChildren() {
+    byId("child-select").replaceChildren();
+    children[byId("parent-select").value].forEach(function (name) {
+      const option = document.createElement("option");
+      option.value = name; option.textContent = name; byId("child-select").appendChild(option);
+    });
+    byId("booking-error").hidden = true;
+  }
+  function render() {
+    const mode = byId("state-preview").value;
+    const state = states[mode];
+    byId("booked-child").textContent = bookedName;
+    byId("booking-ref").textContent = mode === "duplicate" ? "Existing booking #18" : "Booking #41";
+    byId("booking-badge").textContent = state.badge;
+    byId("status-heading").textContent = state.title;
+    byId("status-message").textContent = state.message;
+    byId("payment-controls").hidden = mode !== "pending" && mode !== "empty";
+    byId("payment-result").hidden = !state.payment;
+    byId("payment-outcome").textContent = state.payment;
+    byId("booking-error").hidden = mode !== "duplicate";
+    byId("booking-error-text").textContent = bookedName + " is already confirmed for this class. View the existing booking.";
+    const rows = mode === "empty" ? [] : baseRoster.slice();
+    if (mode === "confirmed" || mode === "duplicate") rows.push({name: bookedName, id: mode === "duplicate" ? 18 : 41});
+    if (mode === "lost") rows.push({name: "Sam Chen", id: 42});
+    byId("roster-rows").replaceChildren();
+    rows.forEach(function (student) {
+      const row = document.createElement("tr");
+      const name = document.createElement("td"); name.textContent = student.name;
+      const id = document.createElement("td"); id.textContent = "#" + student.id;
+      row.append(name, id); byId("roster-rows").appendChild(row);
+    });
+    byId("roster-count").textContent = rows.length + " / 4";
+    byId("empty-roster").hidden = rows.length !== 0;
+    byId("roster-message").textContent = state.roster;
+  }
+  function setState(state) { byId("state-preview").value = state; render(); }
+  byId("layout-preview").addEventListener("change", function () {
+    const table = this.value === "table";
+    byId("stacked-classes").hidden = table; byId("table-classes").hidden = !table;
+  });
+  byId("parent-select").addEventListener("change", loadChildren);
+  byId("state-preview").addEventListener("change", render);
+  byId("booking-preview-form").addEventListener("submit", function (event) {
+    event.preventDefault(); bookedName = byId("child-select").value; setState("pending");
+  });
+  byId("simulate-success").addEventListener("click", function () { setState("confirmed"); });
+  byId("simulate-failure").addEventListener("click", function () { setState("failed"); });
+  byId("refresh-roster").addEventListener("click", render);
+  byId("back-to-booking").addEventListener("click", function () { byId("parent-select").focus(); });
+  byId("reset-preview").addEventListener("click", function () {
+    byId("parent-select").value = "anita"; loadChildren(); bookedName = "Maya Tan"; setState("pending");
+  });
+  const captureState = new URLSearchParams(location.search).get("state");
+  if (Object.prototype.hasOwnProperty.call(states, captureState)) byId("state-preview").value = captureState;
+  loadChildren(); render();
+})();
+</script>
+
+
+</body></html>
