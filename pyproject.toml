@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ottodot-trial-booking"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard-no-fastapi-cloud-cli]==0.141.1",
+    "uvicorn==0.52.4",
+    "jinja2==3.1.6",
+    "python-multipart==0.0.32",
+    "pydantic==2.13.5",
+    "starlette==1.6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "httpx==0.28.1", "ruff==0.16.6"]
+
+[tool.fastapi]
+entrypoint = "app.main:app"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["db/*.sql", "templates/*.html", "static/*.css", "static/*.png"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+extend-exclude = [".steering", ".specs"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
