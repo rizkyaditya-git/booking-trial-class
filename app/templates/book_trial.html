@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Book a trial class{% endblock %}
+{% block content %}
+<h1>Book a trial class</h1>
+<p class="muted">Choose a child and an available class.</p>
+<form method="get" action="/v1/ui/bookings/new">
+  <label class="field" for="parent-select"><span>Demo parent</span>
+    <select id="parent-select" name="demoParentId" required>
+      <option value="">Choose a parent</option>
+      {% for parent in parents %}<option value="{{ parent.id }}" {% if parent.id == parent_id %}selected{% endif %}>{{ parent.name }}</option>{% endfor %}
+    </select>
+  </label>
+  <button type="submit">{{ 'Change parent' if parent_id else 'Continue' }}</button>
+</form>
+{% if parent_id %}
+<form method="post" action="/v1/ui/bookings">
+  <input type="hidden" name="demoParentId" value="{{ parent_id }}">
+  <input type="hidden" name="idempotencyKey" value="{{ key }}">
+  <label class="field" for="child-select"><span>Child</span>
+    <select id="child-select" name="studentId" required>
+      <option value="">Choose a child</option>
+      {% for student in students %}<option value="{{ student.id }}" {% if student.id|string == values.get('studentId', '')|string %}selected{% endif %}>{{ student.name }}</option>{% endfor %}
+    </select>
+  </label>
+  <fieldset><legend>Trial class</legend>
+    {% for trial_class in classes %}
+    <label class="class-choice {% if not trial_class.seats_remaining %}unavailable{% endif %}">
+      <input type="radio" name="trialClassId" value="{{ trial_class.id }}" {% if trial_class.id|string == values.get('trialClassId', '')|string %}checked{% endif %} {% if not trial_class.seats_remaining %}disabled{% else %}required{% endif %}>
+      <span><strong>{{ trial_class.name }}</strong><small>{{ trial_class.starts_at|class_time }}</small><small>{% if trial_class.seats_remaining %}{{ trial_class.seats_remaining }} seat{{ 's' if trial_class.seats_remaining != 1 else '' }} left{% else %}Full{% endif %} · {{ trial_class.confirmed_count }} / 4 confirmed</small></span>
+    </label>
+    {% endfor %}
+  </fieldset>
+  <p class="small muted">A seat is confirmed only after a successful payment and availability check. Availability can change.</p>
+  {% if error %}
+  <div class="notice" role="alert">
+    <strong>{{ 'Already booked' if error.code == 'duplicate_booking' else 'Please check your request' }}</strong>
+    <p>{{ error.detail }}</p>
+    {% if error.existing_booking_id %}<p><a href="/v1/ui/bookings/{{ error.existing_booking_id }}?demoParentId={{ parent_id }}">View the existing booking</a></p>{% endif %}
+    {% if error.code == 'validation_error' %}<p class="small">Submitted child: {{ values.get('studentId', '') }}. Submitted class: {{ values.get('trialClassId', '') }}</p>{% endif %}
+  </div>
+  {% endif %}
+  <button type="submit" class="primary wide">Submit booking</button>
+  <p class="small muted after-button">This demo uses simulated payments.</p>
+</form>
+{% elif error %}<div class="notice" role="alert"><p>{{ error.detail }}</p></div>{% endif %}
+{% endblock %}
+{% block error %}{% endblock %}
+{% block navigation %}
+<nav aria-label="Teacher rosters"><h2>Teacher rosters</h2>{% for trial_class in classes %}<p><a href="/v1/ui/trial-classes/{{ trial_class.id }}/roster">{{ trial_class.name }}</a></p>{% endfor %}</nav>
+{% endblock %}

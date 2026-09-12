@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Class roster{% endblock %}
+{% block audience %}Teacher view{% endblock %}
+{% block content %}
+<h1>Class roster</h1>
+<p><strong>{{ trial_class.name }}</strong><br><span class="muted">{{ trial_class.starts_at|class_time }}</span></p>
+<div class="count"><span>Confirmed students</span><strong>{{ roster|length }} / 4</strong></div>
+<table aria-label="Confirmed students">
+  <thead><tr><th scope="col">Student</th><th scope="col">Booking</th></tr></thead>
+  <tbody>{% for member in roster %}<tr><td>{{ member.student_name }}</td><td>#{{ member.booking_id }}</td></tr>{% endfor %}</tbody>
+</table>
+{% if not roster %}<p class="muted">No confirmed students yet.</p>{% endif %}
+<p class="small muted">Only confirmed bookings appear here.</p>
+<div class="notice"><p>Pending bookings do not hold a seat.</p></div>
+<p><a href="/v1/ui/trial-classes/{{ trial_class.id }}/roster">Refresh roster</a></p>
+{% endblock %}

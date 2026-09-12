@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Trial booking{% endblock %} · Ottodot demo</title>
+  <link rel="icon" type="image/png" href="/v1/static/favicon.png">
+  <link rel="stylesheet" href="/v1/static/styles.css">
+</head>
+<body>
+  <main class="trial-canvas">
+    <div class="sheet">
+      <header class="appbar"><strong>Trial booking</strong><span>{% block audience %}Local demo{% endblock %}</span></header>
+      <div class="body">
+        {% block content %}
+        <h1>Unable to complete this request</h1>
+        {% endblock %}
+        {% block error %}
+        {% if error %}<div class="notice" role="alert"><strong>{{ 'Already booked' if error.code == 'duplicate_booking' else 'Please check your request' }}</strong><p>{{ error.detail }}</p></div>{% endif %}
+        {% if fallback_retry and retry_values and retry_values.idempotencyKey %}
+        <form method="post" action="{{ request.url.path }}">
+          {% for name, value in retry_values.items() %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endfor %}
+          <button type="submit">Retry request</button>
+        </form>
+        {% endif %}
+        {% endblock %}
+        {% block navigation %}<p><a href="/v1/ui/bookings/new">Book a trial</a></p>{% endblock %}
+      </div>
+    </div>
+  </main>
+</body>
+</html>

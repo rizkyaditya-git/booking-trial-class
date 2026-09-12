@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Booking #{{ booking.id }}{% endblock %}
+{% block content %}
+<p class="small muted">Booking #{{ booking.id }}</p>
+<h1>Your trial booking</h1>
+<span class="badge">{{ booking.status.replace('_', ' ')|capitalize }}</span>
+<dl class="details">
+  <div><dt>Child</dt><dd>{{ student.name }}</dd></div>
+  <div><dt>Class</dt><dd>{{ trial_class.name }}</dd></div>
+  <div><dt>When</dt><dd>{{ trial_class.starts_at|class_time }}</dd></div>
+</dl>
+<div class="notice" aria-live="polite" aria-atomic="true">
+{% if booking.status == 'pending_payment' %}
+  <strong>Payment is pending</strong><p>Your booking is saved. Your child is not on the confirmed roster yet.</p>
+{% elif booking.status == 'confirmed' %}
+  <strong>Your child has a seat</strong><p>The simulated payment succeeded and your booking is confirmed.</p>
+{% elif booking.status == 'payment_failed' %}
+  <strong>Payment did not go through</strong><p>The simulated payment failed. Your child has not been added to the roster.</p>
+{% elif booking.status_reason == 'class_full' %}
+  <strong>The last seat was taken</strong><p>Another booking confirmed first. Your booking is cancelled and no charge was made.</p>
+{% else %}
+  <strong>Already booked</strong><p>This child already has a confirmed booking for this class. No second seat or charge was added.</p>
+{% endif %}
+</div>
+{% if booking.status == 'pending_payment' %}
+<h2>Mock payment</h2><p class="small muted">Choose an outcome. No real money is involved.</p>
+<form method="post" action="/v1/ui/bookings/{{ booking.id }}/payment-attempts">
+  <input type="hidden" name="demoParentId" value="{{ parent_id }}">
+  <input type="hidden" name="idempotencyKey" value="{{ key }}">
+  <div class="buttons">
+    <button type="submit" name="requestedOutcome" value="success" class="primary">Simulate success</button>
+    <button type="submit" name="requestedOutcome" value="failure">Simulate failure</button>
+  </div>
+</form>
+{% elif attempt %}
+<dl class="details"><div><dt>Payment result</dt><dd>{% if attempt.outcome == 'succeeded' %}Succeeded (simulated){% elif attempt.outcome == 'failed' %}Failed (simulated){% else %}Blocked: {{ attempt.reason.replace('_', ' ') }}{% endif %}</dd></div></dl>
+{% endif %}
+{% if existing_id %}<p><a href="/v1/ui/bookings/{{ existing_id }}?demoParentId={{ parent_id }}">View the existing booking</a></p>{% endif %}
+{% endblock %}
+{% block error %}{% if error and not error.payment_attempt_id %}{{ super() }}{% endif %}{% endblock %}
+{% block navigation %}
+<p><a href="/v1/ui/trial-classes/{{ trial_class.id }}/roster">View confirmed roster</a></p>
+<p><a href="/v1/ui/bookings/new?demoParentId={{ parent_id }}">Book another trial</a></p>
+{% endblock %}
