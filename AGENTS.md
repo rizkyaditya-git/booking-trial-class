@@ -2,7 +2,7 @@
 
 ## Source of truth
 
-- Read `.artifacts/Ottodot_Full_Stack_Take_Home_Instructions.md` before planning or changing the implementation.
+- Read `README.md` for setup, behavior, and backend design before changing the implementation.
 - Build only the trial-booking slice. Regular enrollment is outside this take-home.
 - Keep the work within the stated four-hour timebox. Record unfinished ideas instead of expanding scope.
 - If the implementation uses Python or a public API, read the applicable files in `.steering/` first. Apply their general rules, but do not copy quotation-specific examples or add abstractions solely to match the examples.
@@ -34,3 +34,11 @@
 - Until implementation exists, treat setup, run, test, and lint commands in `.specs/` as plans, not verified results. After implementation, record only commands that were actually run and their exact results.
 - Keep `README.md` and `AI_USAGE.md` truthful and aligned with the implementation. Include the required setup, design, tradeoff, time-spent, monitoring, and next-step notes.
 - Write concise technical prose with plain words, active voice, and specific claims. Do not report checks that were not run.
+
+## Verified implementation
+
+Tested with Python 3.11.15 and SQLite 3.53.1. Use the setup, run, test, and lint commands in `README.md`.
+
+Clean-copy acceptance: 81 tests passed with two upstream TestClient/AnyIO deprecation warnings in 14.47 seconds; Ruff lint passed; Ruff format reported 18 files already formatted. Existing `.steering` and `.specs` references are excluded from Ruff so their illustrative snippets remain unchanged. Explicit `--reset` setup and overwrite refusal were also checked.
+
+Chrome verification covered selection, successful and failed payment, duplicate rejection, empty/confirmed rosters, the ordered A/B race, and keyboard focus. The final narration, video review, publication, and public-link checks remain user work.

@@ -1,6 +1,6 @@
 # Trial booking solution
 
-Status: design recorded; implementation has not started. The [implementation plan](trial_booking_implementation_plan.md) owns execution rules, remaining tasks, and the time budget.
+Status: implementation exists; verification and submission progress is recorded in the [implementation plan](trial_booking_implementation_plan.md). The plan owns execution rules, remaining tasks, and the time budget.
 
 ## Goal and timebox
 
